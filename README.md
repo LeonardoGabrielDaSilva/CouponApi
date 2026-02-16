@@ -14,6 +14,7 @@ API RESTful para gerenciamento de cupons de desconto, desenvolvida com Spring Bo
 
 ## Como rodar:
 Na raíz do projeto, rodar o docker compose para realizar a criação do container e rodá-lo local:
+
 docker-compose up --build
 
 A aplicação e endpoints ficarão disponíveis no: localhost:8080/swagger-ui/index.html
