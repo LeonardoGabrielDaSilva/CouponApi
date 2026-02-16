@@ -38,10 +38,28 @@ class CouponControllerTest {
 				}
 				""";
 	}
+	
+	private String validRequestBodyWithouPublished() {
+		return """
+				{
+				    "code": "ABC-123",
+				    "description": "Cupom de desconto",
+				    "discountValue": 0.8,
+				    "expirationDate": "2026-11-04T17:14:45.180Z"
+				}
+				""";
+	}
 
 	@Test
 	void testCreateCouponAndReturn201() throws Exception {
 		mockMvc.perform(post("/coupon").contentType(MediaType.APPLICATION_JSON).content(validRequestBody()))
+				.andExpect(status().isCreated()).andExpect(jsonPath("$.code").value("ABC123"))
+				.andExpect(jsonPath("$.status").value("ACTIVE")).andExpect(jsonPath("$.redeemed").value(false));
+	}
+	
+	@Test
+	void testCreateCouponWithoutPublishedAndReturn201() throws Exception {
+		mockMvc.perform(post("/coupon").contentType(MediaType.APPLICATION_JSON).content(validRequestBodyWithouPublished()))
 				.andExpect(status().isCreated()).andExpect(jsonPath("$.code").value("ABC123"))
 				.andExpect(jsonPath("$.status").value("ACTIVE")).andExpect(jsonPath("$.redeemed").value(false));
 	}
@@ -62,7 +80,7 @@ class CouponControllerTest {
 	}
 
 	@Test
-	void testGestCouponAndReturn200() throws Exception {
+	void testGetCouponAndReturn200() throws Exception {
 		MvcResult result = mockMvc
 				.perform(post("/coupon").contentType(MediaType.APPLICATION_JSON).content(validRequestBody()))
 				.andReturn();

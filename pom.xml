@@ -11,9 +11,9 @@
 	</parent>
 	<groupId>br.com.leogs.coupon</groupId>
 	<artifactId>Coupon</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0-RELEASE</version>
 	<name>Coupon</name>
-	<description>Teste técnico para Tenda</description>
+	<description>Teste técnico para a Tenda</description>
 	<url />
 	<licenses>
 		<license />

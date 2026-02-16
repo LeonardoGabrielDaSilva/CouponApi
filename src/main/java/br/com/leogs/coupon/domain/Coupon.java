@@ -29,7 +29,7 @@ public class Coupon {
 	private static final String INVALID_EXPIRATION_DATE = "Data de expiração não pode estar no passado.";
 
 	public Coupon(String code, String description, BigDecimal discountValue, Instant expirationDate,
-			boolean published) {
+			Boolean published) {
 	    validateRequired(code, CODE_REQUIRED);
 	    validateRequired(description, DESCRIPTION_REQUIRED);
 	    validateNotNull(expirationDate, EXPIRATION_DATE_REQUIRED);
@@ -45,13 +45,24 @@ public class Coupon {
 	    this.description = description;
 	    this.discountValue = discountValue;
 	    this.expirationDate = expirationDate;
-	    this.published = published;
+	    this.published = published != null ? published : false;
 	    this.redeemed = false;
 	    this.status = Status.ACTIVE;
 	}
 	
+	/**
+	 * Construtor apenas para a construção do cupom através da camada de persistencia.
+	 * @param id
+	 * @param code
+	 * @param description
+	 * @param discountValue
+	 * @param expirationDate
+	 * @param published
+	 * @param redeemed
+	 * @param status
+	 */
 	public Coupon(String id, String code, String description, BigDecimal discountValue, Instant expirationDate,
-			boolean published, boolean redeemed, Status status) {
+			Boolean published, Boolean redeemed, Status status) {
 		this.id = id;
 		this.code = code;
 		this.description = description;
@@ -124,7 +135,7 @@ public class Coupon {
 	 * @throws InvalidCouponException
 	 */
 	private void validateMinDiscount(BigDecimal value) {
-	    if (value.compareTo(new BigDecimal("0.5")) < 0) {
+	    if (value.compareTo(BigDecimal.valueOf(0.5)) < 0) {
 	        throw new InvalidCouponException(INVALID_DISCOUNT_VALUE);
 	    }
 	}
